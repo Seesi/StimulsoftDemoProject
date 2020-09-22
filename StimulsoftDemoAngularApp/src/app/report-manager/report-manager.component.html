@@ -1,0 +1,22 @@
+<div class="container">
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody *ngIf="reports != null">
+            <tr *ngFor="let report of reports">
+                <th scope="row">{{report.id}}</th>
+                <td>{{report.name}}</td>
+                <td>
+                    <span title="Edit Report" (click)="editReport(report.id)"><fa-icon [icon]="editIcon"></fa-icon></span> |
+                    <span title="View Report" (click)="viewReport(report.id)"><fa-icon [icon]="viewIcon"></fa-icon></span> |
+                    <span title="Email Report" (click)="emailReport(report.id)"><fa-icon [icon]="emailIcon"></fa-icon></span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
