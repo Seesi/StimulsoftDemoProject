@@ -43,16 +43,12 @@ namespace report_definition_api_demo.Controllers
         public async Task SendMail(int reportId, string emailAddress)
         {
             var reportDefinition = await _reportService.GetReportAsync(reportId);
-
             var newreport = new StiReport();
-            newreport.LoadDocumentFromJson(reportDefinition.Definition);
-
-            string base64ReportString = BuildReport(newreport);
-
+            var loadedReport = newreport.LoadFromJson(reportDefinition.Definition);
+            var renderReport = await loadedReport.RenderAsync();
+            string base64ReportString = BuildReport(renderReport);
             string message = "Please find attached a copy of report recently generated with the Stimulsoft Report Design Engine in my Demo app";
-
             await _emailService.SendEmail("Demo Stimulsoft Report", emailAddress, message, "", base64ReportString, $"{reportDefinition.Name}.pdf");
-
         }
 
         private string BuildReport(StiReport report)
